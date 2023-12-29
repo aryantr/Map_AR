@@ -20,8 +20,8 @@ public class MapUpdate : MonoBehaviour
     void Start()
     {
         cameraInfoImage.SetActive(false);
-        lastPlayerLocation = GetPlayerLocation();
         initialPlayerLocation = GetPlayerLocation();
+        lastPlayerLocation = initialPlayerLocation;
 
     }
 
@@ -38,18 +38,24 @@ public class MapUpdate : MonoBehaviour
 
             if(distance > recenterThreshold)
             {
+                // Recenter the map based on player location exceeds the threshold
                 map.UpdateMap(currentPlayerLocation);
                 lastPlayerLocation = currentPlayerLocation;
 
             }
+            else{}
 
             if(totalDistance > arThreshold)
             {
                 cameraInfoImage.SetActive(true);
-
             }
+            else{}
 
             debugText.text = "Distance = " + totalDistance.ToString();
+        }
+        else
+        {
+            debugText.text = "Waiting for location....\nCheck location is enabled in device";
         }
     }
 
