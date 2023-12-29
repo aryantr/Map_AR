@@ -9,12 +9,16 @@ public class MapUpdate : MonoBehaviour
     public AbstractMap map;
     public Transform player;
     public Text debugText;
+    public Image cameraInfoImage;
     public AbstractLocationProvider locationProvider;
 
     [SerializeField] float recenterThreshold = 10f;
     private Vector2d lastPlayerLocation;
+    private float totalDistanceCovered = 0f;
     void Start()
     {
+        totalDistanceCovered = 0f;
+        cameraInfoImage.enabled = false;
         lastPlayerLocation = GetPlayerLocation();
     }
 
@@ -31,8 +35,18 @@ public class MapUpdate : MonoBehaviour
             {
                 map.UpdateMap(currentPlayerLocation);
                 lastPlayerLocation = currentPlayerLocation;
+
             }
-            debugText.text = "Distance = " + distance.ToString();
+
+            totalDistanceCovered +=  distance;
+
+            if(totalDistanceCovered > 2f)
+            {
+                cameraInfoImage.enabled = true;
+
+            }
+
+            debugText.text = "Distance = " + totalDistanceCovered.ToString();
         }
     }
 
