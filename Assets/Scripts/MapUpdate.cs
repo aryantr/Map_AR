@@ -9,17 +9,20 @@ public class MapUpdate : MonoBehaviour
     public AbstractMap map;
     public Transform player;
     public Text debugText;
-    public Image cameraInfoImage;
+    public GameObject cameraInfoImage;
     public AbstractLocationProvider locationProvider;
 
     [SerializeField] float recenterThreshold = 10f;
+    [SerializeField] float arThreshold = 1f;
     private Vector2d lastPlayerLocation;
-    private float totalDistanceCovered = 0f;
+    private Vector2d initialPlayerLocation;
+
     void Start()
     {
-        totalDistanceCovered = 0f;
-        cameraInfoImage.enabled = false;
+        cameraInfoImage.SetActive(false);
         lastPlayerLocation = GetPlayerLocation();
+        initialPlayerLocation = GetPlayerLocation();
+
     }
 
     // Update is called once per frame
@@ -29,7 +32,9 @@ public class MapUpdate : MonoBehaviour
         {
             Vector2d currentPlayerLocation = GetPlayerLocation();
             float distance = (float)Vector2d.Distance(currentPlayerLocation, lastPlayerLocation);
+            float totalDistance = (float)Vector2d.Distance(currentPlayerLocation, initialPlayerLocation);
             distance *= 10000f;
+            totalDistance *= 10000f;
 
             if(distance > recenterThreshold)
             {
@@ -38,15 +43,13 @@ public class MapUpdate : MonoBehaviour
 
             }
 
-            totalDistanceCovered +=  distance;
-
-            if(totalDistanceCovered > 2f)
+            if(totalDistance > arThreshold)
             {
-                cameraInfoImage.enabled = true;
+                cameraInfoImage.SetActive(true);
 
             }
 
-            debugText.text = "Distance = " + totalDistanceCovered.ToString();
+            debugText.text = "Distance = " + totalDistance.ToString();
         }
     }
 

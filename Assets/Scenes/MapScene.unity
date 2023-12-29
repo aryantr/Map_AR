@@ -242,7 +242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &12709089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1077,9 +1077,10 @@ MonoBehaviour:
   map: {fileID: 1806015381}
   player: {fileID: 843921208}
   debugText: {fileID: 1962332873}
-  cameraInfoImage: {fileID: 12709091}
+  cameraInfoImage: {fileID: 12709088}
   locationProvider: {fileID: 731905425}
-  recenterThreshold: 1
+  recenterThreshold: 2
+  arThreshold: 0.6
 --- !u!1 &1962332871
 GameObject:
   m_ObjectHideFlags: 0
